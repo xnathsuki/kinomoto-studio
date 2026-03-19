@@ -1,0 +1,25 @@
+:root {
+  --bg: #0d0b14;
+  --surface: #16121f;
+  --surface2: #1e1829;
+  --surface3: #241d30;
+  --pink: #ff6eb4;
+  --pink-dim: #ff6eb430;
+  --pink-soft: #ff6eb460;
+  --lila: #c084fc;
+  --lila-dim: #c084fc25;
+  --mint: #67e8b1;
+  --mint-dim: #67e8b120;
+  --amber: #fbbf24;
+  --amber-dim: #fbbf2420;
+  --red: #f87171;
+  --red-dim: #f8717120;
+  --text: #f0e6ff;
+  --text2: #a891c8;
+  --text3: #6b5a8a;
+  --border: #2a2040;
+  --border2: #3d2f5a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 20px;
+}

@@ -1,0 +1,133 @@
+.calendario-section {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.calendar-card {
+  overflow: visible;
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.calendar-nav button {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-hover);
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calendar-nav button:hover {
+  background: var(--accent-lilac);
+  color: var(--bg);
+  border-color: var(--accent-lilac);
+}
+
+.calendar-nav h2 {
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-header-cell {
+  padding: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cal-day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.cal-day-cell:hover {
+  background: var(--surface-hover);
+}
+
+.cal-day-cell.other-month {
+  opacity: 0.4;
+}
+
+.cal-day-cell.today {
+  background: rgba(255, 110, 180, 0.2);
+  color: var(--accent-pink);
+}
+
+.cal-day-cell.selected {
+  background: rgba(192, 132, 252, 0.3);
+  border: 2px solid var(--accent-lilac);
+}
+
+.cal-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.95rem;
+}
+
+.cal-dot {
+  position: absolute;
+  bottom: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.day-detail {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.day-detail h4 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.day-detail ul {
+  list-style: none;
+}
+
+.day-detail li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.day-detail li:last-child {
+  border-bottom: none;
+}
+
+.day-detail .client-name {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-style: italic;
+}

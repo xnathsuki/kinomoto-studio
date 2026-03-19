@@ -1,0 +1,225 @@
+.dashboard {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 28px;
+}
+
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.dashboard-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  min-height: 140px;
+}
+
+.dashboard-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.card-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.mood-options {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mood-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: var(--surface-hover);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.mood-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--accent-lilac);
+}
+
+.mood-btn.active {
+  border-color: var(--accent-pink);
+  background: rgba(255, 110, 180, 0.2);
+  box-shadow: 0 0 20px rgba(255, 110, 180, 0.3);
+}
+
+.mood-message {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.progress-bar-container {
+  height: 12px;
+  background: var(--surface-hover);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-pink), var(--accent-lilac));
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.accent-pink { color: var(--accent-pink); }
+.accent-lilac { color: var(--accent-lilac); }
+.accent-mint { color: var(--accent-mint); }
+
+.summary-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mini-calendar {
+  font-size: 0.85rem;
+}
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.cal-day-name {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  position: relative;
+}
+
+.cal-cell.today {
+  background: rgba(255, 110, 180, 0.2);
+  color: var(--accent-pink);
+}
+
+.cal-dot {
+  position: absolute;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.deliveries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--surface-hover);
+  border-radius: 12px;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.delivery-item:hover {
+  transform: translateX(4px);
+}
+
+.delivery-star {
+  opacity: 0.6;
+}
+
+.delivery-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.delivery-name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.delivery-client {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.delivery-countdown {
+  font-family: 'DM Mono', monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.delivery-countdown .overdue {
+  color: var(--accent-pink);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}

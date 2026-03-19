@@ -1,0 +1,96 @@
+.calendario-page {
+  min-height: 100vh;
+}
+
+.calendario-content {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.calendario-mes {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.calendario-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text3);
+  text-align: center;
+  padding: 8px 0;
+}
+
+.calendario-cell {
+  aspect-ratio: 1;
+  min-height: 60px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.calendario-cell.other-month {
+  opacity: 0.35;
+}
+
+.calendario-cell.today {
+  border-color: var(--pink-soft);
+  border-width: 2px;
+}
+
+.cell-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.cell-dot {
+  position: absolute;
+  bottom: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dot-red { background: var(--red); }
+.dot-amber { background: var(--amber); }
+.dot-pink { background: var(--pink); }
+
+.leyenda-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.calendario-leyenda {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+}
