@@ -5,6 +5,7 @@
 .proyectos-content {
   padding: 24px;
   overflow-x: auto;
+  animation: fadeIn var(--anim-mid) var(--ease-out);
 }
 
 .btn-primary {
@@ -16,16 +17,25 @@
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
   filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--pink-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .empty-state-large {
   text-align: center;
   padding: 60px 24px;
   color: var(--text2);
+  animation: fadeInUp var(--anim-slow) var(--ease-out);
 }
 
 .empty-state-large .empty-icon {
@@ -60,6 +70,18 @@
   display: flex;
   flex-direction: column;
   min-height: 400px;
+  transition: all var(--anim-fast) ease;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
+}
+
+.kanban-col:nth-child(1) { animation-delay: 0s; }
+.kanban-col:nth-child(2) { animation-delay: 0.06s; }
+.kanban-col:nth-child(3) { animation-delay: 0.12s; }
+.kanban-col:nth-child(4) { animation-delay: 0.18s; }
+.kanban-col:nth-child(5) { animation-delay: 0.24s; }
+
+.kanban-col:hover {
+  border-color: var(--border2);
 }
 
 .kanban-col-title {
@@ -88,11 +110,14 @@
   border-radius: var(--radius-sm);
   padding: 14px;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: all var(--anim-fast) ease;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
 
 .proyecto-card:hover {
   border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .proyecto-nombre {
@@ -132,7 +157,8 @@
   height: 100%;
   background: linear-gradient(90deg, var(--pink), var(--lila));
   border-radius: var(--radius-pill);
-  transition: width 0.3s;
+  animation: progressFill 0.8s var(--ease-out) both;
+  animation-delay: 0.3s;
 }
 
 .proyecto-pct {
@@ -157,9 +183,30 @@
   font-size: 13px;
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
+  transition: all var(--anim-fast) ease;
 }
 
 .kanban-add:hover {
   border-color: var(--pink-soft);
   color: var(--pink);
+  transform: scale(1.02);
+}
+
+/* === Responsive === */
+
+@media (max-width: 768px) {
+  .proyectos-content {
+    padding: 16px;
+  }
+
+  .kanban {
+    flex-direction: column;
+    gap: 12px;
+    min-width: auto;
+  }
+
+  .kanban-col {
+    flex: 1 1 auto;
+    min-height: auto;
+  }
 }

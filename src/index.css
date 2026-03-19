@@ -11,9 +11,9 @@ body {
   color: var(--text);
   font-family: 'Nunito', sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -26,12 +26,10 @@ body {
   border-radius: 4px;
 }
 
-/* Transiciones globales */
 button, a, input, select, textarea {
-  transition: all 0.15s;
+  transition: all var(--anim-fast) ease;
 }
 
-/* Focus visible */
 input:focus, select:focus, textarea:focus, button:focus-visible {
   outline: 2px solid var(--pink-soft);
   outline-offset: 2px;
@@ -40,3 +38,101 @@ input:focus, select:focus, textarea:focus, button:focus-visible {
 .font-mono {
   font-family: 'DM Mono', monospace;
 }
+
+/* === Keyframes globales === */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes progressFill {
+  from { width: 0; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* === Botones globales mejorados === */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--pink-glow), 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97) translateY(0);
+  filter: brightness(0.95);
+}
+
+.btn-ghost:active,
+.btn-sm:active {
+  transform: scale(0.97);
+}
+
+/* === Utilidades de animación === */
+
+.anim-fade-in { animation: fadeIn var(--anim-mid) var(--ease-out) both; }
+.anim-fade-in-up { animation: fadeInUp var(--anim-mid) var(--ease-out) both; }
+.anim-scale-in { animation: scaleIn var(--anim-mid) var(--ease-spring) both; }
+.anim-pop-in { animation: popIn var(--anim-mid) var(--ease-spring) both; }
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }

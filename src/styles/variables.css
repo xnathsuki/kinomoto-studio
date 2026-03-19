@@ -6,6 +6,7 @@
   --pink: #ff6eb4;
   --pink-dim: #ff6eb430;
   --pink-soft: #ff6eb460;
+  --pink-glow: #ff6eb418;
   --lila: #c084fc;
   --lila-dim: #c084fc25;
   --mint: #67e8b1;
@@ -22,4 +23,13 @@
   --radius: 12px;
   --radius-sm: 8px;
   --radius-pill: 20px;
+
+  --sidebar-w: 200px;
+
+  --anim-fast: 0.15s;
+  --anim-mid: 0.3s;
+  --anim-slow: 0.5s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }

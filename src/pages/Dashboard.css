@@ -6,12 +6,14 @@
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+  animation: fadeIn var(--anim-mid) var(--ease-out);
 }
 
 .dashboard-mood {
   font-size: 1rem;
   color: var(--text2);
   margin: 0 0 24px 0;
+  animation: fadeInUp var(--anim-mid) var(--ease-out);
 }
 
 .stats-grid {
@@ -26,11 +28,19 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  transition: border-color 0.15s;
+  transition: all var(--anim-fast) ease;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.stat-card:nth-child(1) { animation-delay: 0s; }
+.stat-card:nth-child(2) { animation-delay: 0.06s; }
+.stat-card:nth-child(3) { animation-delay: 0.12s; }
+.stat-card:nth-child(4) { animation-delay: 0.18s; }
 
 .stat-card:hover {
   border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .stat-pink .stat-value { color: var(--pink); }
@@ -61,10 +71,12 @@
   align-items: center;
   justify-content: center;
   opacity: 0.8;
+  transition: all var(--anim-fast) var(--ease-spring);
 }
 
 .stat-eye-btn:hover {
   opacity: 1;
+  transform: scale(1.15);
 }
 
 .stat-label {
@@ -84,11 +96,14 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  transition: border-color 0.15s;
+  transition: all var(--anim-fast) ease;
+  animation: fadeInUp var(--anim-slow) var(--ease-out) both;
+  animation-delay: 0.2s;
 }
 
 .widget:hover {
   border-color: var(--border2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .widget-title {
@@ -100,6 +115,7 @@
 
 .widget-full {
   grid-column: 1 / -1;
+  animation-delay: 0.3s;
 }
 
 .empty-state {
@@ -133,7 +149,14 @@
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.deadline-item:nth-child(1) { animation-delay: 0.25s; }
+.deadline-item:nth-child(2) { animation-delay: 0.3s; }
+.deadline-item:nth-child(3) { animation-delay: 0.35s; }
+.deadline-item:nth-child(4) { animation-delay: 0.4s; }
+.deadline-item:nth-child(5) { animation-delay: 0.45s; }
 
 .deadline-item:last-child {
   border-bottom: none;
@@ -162,7 +185,13 @@
   gap: 10px;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.task-item:nth-child(1) { animation-delay: 0.25s; }
+.task-item:nth-child(2) { animation-delay: 0.3s; }
+.task-item:nth-child(3) { animation-delay: 0.35s; }
+.task-item:nth-child(4) { animation-delay: 0.4s; }
 
 .task-item:last-child {
   border-bottom: none;
@@ -198,7 +227,12 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.progress-item:nth-child(1) { animation-delay: 0.35s; }
+.progress-item:nth-child(2) { animation-delay: 0.4s; }
+.progress-item:nth-child(3) { animation-delay: 0.45s; }
 
 .progress-header {
   display: flex;
@@ -221,8 +255,11 @@
   height: 100%;
   background: linear-gradient(90deg, var(--pink), var(--lila));
   border-radius: var(--radius-pill);
-  transition: width 0.3s;
+  animation: progressFill 1s var(--ease-out) both;
+  animation-delay: 0.5s;
 }
+
+/* === Responsive === */
 
 @media (max-width: 900px) {
   .stats-grid {
@@ -233,8 +270,23 @@
   }
 }
 
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 16px;
+  }
+}
+
 @media (max-width: 500px) {
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .widget {
+    padding: 16px;
   }
 }

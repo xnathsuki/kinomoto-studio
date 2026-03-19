@@ -30,7 +30,7 @@ function getUrgencyClass(deadline) {
   return 'mint';
 }
 
-export default function Proyectos() {
+export default function Proyectos({ onMenuClick }) {
   const { clientes, proyectos, addProyecto, editProyecto, deleteProyecto } = useStudio();
   const { showToast } = useToast();
   const [modalOpen, setModalOpen] = useState(false);
@@ -118,6 +118,7 @@ export default function Proyectos() {
     <div className="proyectos-page">
       <Topbar
         title="Proyectos"
+        onMenuClick={onMenuClick}
         action={
           <button className="btn-primary" onClick={() => openNew()}>
             + Nuevo proyecto

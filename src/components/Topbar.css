@@ -9,6 +9,13 @@
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   z-index: 50;
+  animation: fadeInDown var(--anim-mid) var(--ease-out);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .topbar-title {
@@ -21,4 +28,10 @@
 .topbar-action {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
 }

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useStudio } from '../context/StudioContext';
 import { useToast } from '../context/ToastContext';
 import { useFinanzasAuth } from '../context/FinanzasAuthContext';
@@ -19,13 +19,27 @@ const navItems = [
 
 const MOODS = ['🔥', '🌸', '😴', '⚡', '🎨'];
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, onClose }) {
   const { mood, setMood } = useStudio();
   const { showToast } = useToast();
   const { isAuthenticated: finanzasAuth, setIsAuthenticated: setFinanzasAuth } = useFinanzasAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [finanzasModalOpen, setFinanzasModalOpen] = useState(false);
   const [finanzasPassword, setFinanzasPassword] = useState('');
+
+  useEffect(() => {
+    if (mobileOpen) onClose?.();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
 
   const handleFinanzasClick = (e) => {
     e.preventDefault();
@@ -51,87 +65,95 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <h1 className="sidebar-logo">✦ Kinomoto Studio</h1>
-        <p className="sidebar-subtitle">diseño con propósito ✦</p>
-      </div>
-
-      <nav className="sidebar-nav">
-        {navItems.map((item) =>
-          item.protected ? (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `nav-link ${isActive ? 'active' : ''}`
-              }
-              onClick={handleFinanzasClick}
-            >
-              <span className="nav-icon">{item.icon}</span>
-              <span className="nav-label">{item.label}</span>
-            </NavLink>
-          ) : (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `nav-link ${isActive ? 'active' : ''}`
-              }
-              end={item.path === '/'}
-            >
-              <span className="nav-icon">{item.icon}</span>
-              <span className="nav-label">{item.label}</span>
-            </NavLink>
-          )
-        )}
-      </nav>
-
-      <Modal
-        isOpen={finanzasModalOpen}
-        onClose={() => { setFinanzasModalOpen(false); setFinanzasPassword(''); }}
-        title="✦ Acceso restringido"
-      >
-        <form onSubmit={handleFinanzasSubmit}>
-          <p className="modal-subtitle">Ingresa tu contraseña para ver Finanzas</p>
-          <div className="input-group">
-            <label>Contraseña</label>
-            <input
-              type="password"
-              value={finanzasPassword}
-              onChange={(e) => setFinanzasPassword(e.target.value)}
-              placeholder="Contraseña"
-              autoFocus
-              onKeyDown={(e) => e.key === 'Enter' && handleFinanzasSubmit()}
-            />
-          </div>
-          <div className="modal-actions">
-            <button type="button" className="btn-ghost" onClick={() => setFinanzasModalOpen(false)}>
-              Cancelar
-            </button>
-            <button type="submit" className="btn-primary">
-              Entrar ✦
-            </button>
-          </div>
-        </form>
-      </Modal>
-
-      <div className="sidebar-mood">
-        <label className="mood-label">✦ Tu mood hoy</label>
-        <div className="mood-emojis">
-          {MOODS.map((emoji) => (
-            <button
-              key={emoji}
-              type="button"
-              className={`mood-btn ${mood === emoji ? 'active' : ''}`}
-              onClick={() => setMood(mood === emoji ? null : emoji)}
-              aria-label={`Mood ${emoji}`}
-            >
-              {emoji}
-            </button>
-          ))}
+    <>
+      {mobileOpen && (
+        <div className="sidebar-overlay" onClick={onClose} aria-hidden />
+      )}
+      <aside className={`sidebar ${mobileOpen ? 'sidebar--open' : ''}`}>
+        <div className="sidebar-header">
+          <h1 className="sidebar-logo">✦ Kinomoto Studio</h1>
+          <p className="sidebar-subtitle">diseño con propósito ✦</p>
+          <button className="sidebar-close-btn" onClick={onClose} aria-label="Cerrar menú">✕</button>
         </div>
-      </div>
-    </aside>
+
+        <nav className="sidebar-nav">
+          {navItems.map((item, i) =>
+            item.protected ? (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                onClick={handleFinanzasClick}
+                style={{ animationDelay: `${i * 0.04}s` }}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </NavLink>
+            ) : (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+                end={item.path === '/'}
+                style={{ animationDelay: `${i * 0.04}s` }}
+              >
+                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </NavLink>
+            )
+          )}
+        </nav>
+
+        <Modal
+          isOpen={finanzasModalOpen}
+          onClose={() => { setFinanzasModalOpen(false); setFinanzasPassword(''); }}
+          title="✦ Acceso restringido"
+        >
+          <form onSubmit={handleFinanzasSubmit}>
+            <p className="modal-subtitle">Ingresa tu contraseña para ver Finanzas</p>
+            <div className="input-group">
+              <label>Contraseña</label>
+              <input
+                type="password"
+                value={finanzasPassword}
+                onChange={(e) => setFinanzasPassword(e.target.value)}
+                placeholder="Contraseña"
+                autoFocus
+                onKeyDown={(e) => e.key === 'Enter' && handleFinanzasSubmit()}
+              />
+            </div>
+            <div className="modal-actions">
+              <button type="button" className="btn-ghost" onClick={() => setFinanzasModalOpen(false)}>
+                Cancelar
+              </button>
+              <button type="submit" className="btn-primary">
+                Entrar ✦
+              </button>
+            </div>
+          </form>
+        </Modal>
+
+        <div className="sidebar-mood">
+          <label className="mood-label">✦ Tu mood hoy</label>
+          <div className="mood-emojis">
+            {MOODS.map((emoji) => (
+              <button
+                key={emoji}
+                type="button"
+                className={`mood-btn ${mood === emoji ? 'active' : ''}`}
+                onClick={() => setMood(mood === emoji ? null : emoji)}
+                aria-label={`Mood ${emoji}`}
+              >
+                {emoji}
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

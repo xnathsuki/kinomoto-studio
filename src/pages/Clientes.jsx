@@ -24,7 +24,7 @@ function getAvatarColor(index) {
   return AVATAR_COLORS[index % AVATAR_COLORS.length];
 }
 
-export default function Clientes() {
+export default function Clientes({ onMenuClick }) {
   const { clientes, proyectos, addCliente, editCliente, deleteCliente } = useStudio();
   const { showToast } = useToast();
   const [modalOpen, setModalOpen] = useState(false);
@@ -96,6 +96,7 @@ export default function Clientes() {
     <div className="clientes-page">
       <Topbar
         title="Clientes"
+        onMenuClick={onMenuClick}
         action={
           <button className="btn-primary" onClick={openNew}>
             + Nuevo cliente

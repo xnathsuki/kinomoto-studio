@@ -9,7 +9,7 @@ import './Finanzas.css';
 
 const PASSWORD_FINANZAS = 'kinomoto2024';
 
-export default function Finanzas() {
+export default function Finanzas({ onMenuClick }) {
   const { clientes, proyectos } = useStudio();
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function Finanzas() {
   if (!isAuthenticated) {
     return (
       <div className="finanzas-page">
-        <Topbar title="Finanzas" />
+        <Topbar title="Finanzas" onMenuClick={onMenuClick} />
         <Modal
           isOpen={passwordModalOpen}
           onClose={() => navigate('/')}
@@ -91,7 +91,7 @@ export default function Finanzas() {
 
   return (
     <div className="finanzas-page">
-      <Topbar title="Finanzas" />
+      <Topbar title="Finanzas" onMenuClick={onMenuClick} />
 
       <div className="finanzas-content">
         <div className="finanzas-stats">

@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { StudioProvider } from './context/StudioContext';
 import { ToastProvider } from './context/ToastContext';
@@ -11,25 +12,35 @@ import Calendario from './pages/Calendario';
 import Finanzas from './pages/Finanzas';
 import './App.css';
 
+function AppInner() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const toggleMenu = useCallback(() => setMobileMenuOpen((v) => !v), []);
+  const closeMenu = useCallback(() => setMobileMenuOpen(false), []);
+
+  return (
+    <div className="app">
+      <Sidebar mobileOpen={mobileMenuOpen} onClose={closeMenu} />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Dashboard onMenuClick={toggleMenu} />} />
+          <Route path="/clientes" element={<Clientes onMenuClick={toggleMenu} />} />
+          <Route path="/proyectos" element={<Proyectos onMenuClick={toggleMenu} />} />
+          <Route path="/tareas" element={<Tareas onMenuClick={toggleMenu} />} />
+          <Route path="/calendario" element={<Calendario onMenuClick={toggleMenu} />} />
+          <Route path="/finanzas" element={<Finanzas onMenuClick={toggleMenu} />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
 function App() {
   return (
     <StudioProvider>
       <ToastProvider>
         <BrowserRouter>
           <FinanzasAuthProvider>
-            <div className="app">
-              <Sidebar />
-              <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/clientes" element={<Clientes />} />
-                <Route path="/proyectos" element={<Proyectos />} />
-                <Route path="/tareas" element={<Tareas />} />
-                <Route path="/calendario" element={<Calendario />} />
-                <Route path="/finanzas" element={<Finanzas />} />
-              </Routes>
-              </main>
-            </div>
+            <AppInner />
           </FinanzasAuthProvider>
         </BrowserRouter>
       </ToastProvider>

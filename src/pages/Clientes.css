@@ -6,6 +6,7 @@
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+  animation: fadeIn var(--anim-mid) var(--ease-out);
 }
 
 .btn-primary {
@@ -17,16 +18,25 @@
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
   filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--pink-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .empty-state-large {
   text-align: center;
   padding: 60px 24px;
   color: var(--text2);
+  animation: fadeInUp var(--anim-slow) var(--ease-out);
 }
 
 .empty-state-large .empty-icon {
@@ -60,11 +70,21 @@
   display: flex;
   gap: 16px;
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: all var(--anim-fast) ease;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.cliente-card:nth-child(1) { animation-delay: 0s; }
+.cliente-card:nth-child(2) { animation-delay: 0.05s; }
+.cliente-card:nth-child(3) { animation-delay: 0.1s; }
+.cliente-card:nth-child(4) { animation-delay: 0.15s; }
+.cliente-card:nth-child(5) { animation-delay: 0.2s; }
+.cliente-card:nth-child(6) { animation-delay: 0.25s; }
 
 .cliente-card:hover {
   border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .cliente-avatar {
@@ -78,6 +98,11 @@
   font-size: 1.2rem;
   color: #0d0b14;
   flex-shrink: 0;
+  transition: transform var(--anim-fast) var(--ease-spring);
+}
+
+.cliente-card:hover .cliente-avatar {
+  transform: scale(1.08);
 }
 
 .avatar-pink { background: var(--pink); }
@@ -150,14 +175,32 @@
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.15s;
+  transition: all var(--anim-fast) ease;
 }
 
 .btn-whatsapp:hover {
   background: #25D36630;
   filter: brightness(1.1);
+  transform: scale(1.03);
 }
 
 .wa-icon {
   font-size: 14px;
+}
+
+/* === Responsive === */
+
+@media (max-width: 768px) {
+  .clientes-content {
+    padding: 16px;
+  }
+
+  .clientes-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cliente-card {
+    padding: 16px;
+  }
 }

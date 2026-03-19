@@ -5,13 +5,18 @@
   padding: 20px;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all var(--anim-mid) var(--ease-out);
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
 
 .kawaii-card.hoverable:hover {
   border-color: rgba(255, 110, 180, 0.4);
   box-shadow: 0 8px 32px rgba(255, 110, 180, 0.1);
   transform: translateY(-2px);
+}
+
+.kawaii-card.hoverable:active {
+  transform: scale(0.99);
 }
 
 .card-decor {

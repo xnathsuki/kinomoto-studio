@@ -4,8 +4,10 @@
 
 .tareas-content {
   padding: 24px;
-  max-width: 900px;
+  max-width: 100%;
   margin: 0 auto;
+  overflow-x: auto;
+  animation: fadeIn var(--anim-mid) var(--ease-out);
 }
 
 .btn-primary {
@@ -17,10 +19,18 @@
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
   filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--pink-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .btn-sm {
@@ -29,10 +39,28 @@
   margin-top: 12px;
 }
 
-.tareas-blocks {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+/* === Kanban layout === */
+
+.tareas-kanban {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  min-height: 400px;
+}
+
+.tareas-kanban::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tareas-kanban::-webkit-scrollbar-track {
+  background: var(--surface2);
+  border-radius: 4px;
+}
+
+.tareas-kanban::-webkit-scrollbar-thumb {
+  background: var(--border2);
+  border-radius: 4px;
 }
 
 .tareas-block {
@@ -40,19 +68,83 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  transition: border-color 0.15s;
+  transition: all var(--anim-fast) ease;
+  flex-shrink: 0;
+  min-width: 280px;
+  max-width: 320px;
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
 }
+
+.tareas-block:nth-child(1) { animation-delay: 0s; }
+.tareas-block:nth-child(2) { animation-delay: 0.08s; }
+.tareas-block:nth-child(3) { animation-delay: 0.16s; }
+.tareas-block:nth-child(4) { animation-delay: 0.24s; }
 
 .tareas-block:hover {
   border-color: var(--border2);
+}
+
+.tareas-columna.drop-active {
+  border-color: var(--pink-soft);
+  box-shadow: inset 0 0 20px var(--pink-glow);
+}
+
+.tareas-columna-add {
+  min-width: 120px;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 44px;
+  background: transparent;
+  border: none;
+  animation: fadeIn var(--anim-slow) var(--ease-out) both;
+  animation-delay: 0.3s;
+}
+
+.btn-add-columna {
+  background: transparent;
+  border: 2px dashed var(--border2);
+  color: var(--text2);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  transition: all var(--anim-fast) ease;
+}
+
+.btn-add-columna:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  transform: scale(1.03);
 }
 
 .block-title {
   font-size: 1rem;
   font-weight: 600;
   margin: 0 0 16px 0;
+  padding-top: 4px;
+  border-top: 3px solid transparent;
   color: var(--text);
 }
+
+.columna-drop-zone {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  transition: all var(--anim-fast) ease;
+}
+
+.columna-drop-zone:hover {
+  border-color: var(--border2);
+}
+
+/* === Tarea item === */
 
 .tarea-list {
   list-style: none;
@@ -66,6 +158,8 @@
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid var(--border);
+  animation: fadeInUp var(--anim-mid) var(--ease-out) both;
+  transition: all var(--anim-fast) ease;
 }
 
 .tarea-item:last-child {
@@ -83,29 +177,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
+  transition: all var(--anim-fast) var(--ease-spring);
 }
 
 .tarea-checkbox:hover {
   border-color: var(--pink-soft);
+  transform: scale(1.1);
 }
 
 .tarea-checkbox.checked {
   background: var(--pink);
   border-color: var(--pink);
-  animation: checkbox-pop 0.2s ease;
+  animation: popIn var(--anim-mid) var(--ease-spring);
 }
 
 .tarea-checkbox.checked .tarea-check {
   color: #0d0b14;
   font-size: 14px;
   font-weight: 700;
-}
-
-@keyframes checkbox-pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
 }
 
 .tarea-content {
@@ -115,6 +204,26 @@
 
 .tarea-main {
   cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.tarea-expand-icon {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--text3);
+  transition: transform var(--anim-fast) var(--ease-spring);
+}
+
+.tarea-expand-icon.rotated {
+  transform: rotate(90deg);
+  color: var(--pink);
+}
+
+.tarea-main-inner {
+  flex: 1;
+  min-width: 0;
 }
 
 .tarea-texto {
@@ -125,11 +234,14 @@
 .tarea-contexto-panel {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height var(--anim-mid) var(--ease-out);
+  opacity: 0;
 }
 
 .tarea-contexto-panel.expanded {
-  max-height: 500px;
+  max-height: 1200px;
+  opacity: 1;
+  transition: max-height var(--anim-slow) var(--ease-out), opacity var(--anim-mid) ease;
 }
 
 .tarea-contexto-texto {
@@ -161,7 +273,7 @@
   color: var(--text3);
   font-size: 14px;
   opacity: 0;
-  transition: opacity 0.15s;
+  transition: all var(--anim-fast) ease;
 }
 
 .tarea-item:hover .tarea-edit-btn {
@@ -170,6 +282,7 @@
 
 .tarea-edit-btn:hover {
   color: var(--pink);
+  transform: scale(1.15);
 }
 
 .tarea-foto-preview {
@@ -257,8 +370,708 @@
   opacity: 0.8;
 }
 
-@media (max-width: 700px) {
-  .tareas-blocks {
-    grid-template-columns: 1fr;
+/* === Filtro etiquetas === */
+
+.tareas-filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 16px;
+  max-width: 100%;
+  animation: fadeInDown var(--anim-mid) var(--ease-out);
+}
+
+.filtro-pill {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface3);
+  color: var(--text3);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--anim-fast) var(--ease-spring);
+}
+
+.filtro-pill:hover {
+  transform: scale(1.05);
+}
+
+.filtro-pill.active {
+  border-color: var(--pink-soft);
+  transform: scale(1.05);
+}
+
+/* === Drag === */
+
+.tarea-drag-handle {
+  cursor: grab;
+  color: var(--text3);
+  font-size: 14px;
+  padding: 4px;
+  flex-shrink: 0;
+  user-select: none;
+  transition: color var(--anim-fast) ease;
+}
+
+.tarea-drag-handle:hover {
+  color: var(--pink);
+}
+
+.tarea-drag-handle:active {
+  cursor: grabbing;
+}
+
+.tarea-item.dragging {
+  opacity: 0.4;
+  transform: scale(0.98);
+}
+
+.tarea-item.drag-over {
+  border-color: var(--pink-soft);
+  border-style: dashed;
+  background: var(--pink-glow);
+}
+
+/* === Etiquetas en tarjeta === */
+
+.tarea-main-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.tarea-etiqueta-pill {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.tarea-etiqueta-more {
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.tarea-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+/* === Deadline chips === */
+
+.deadline-chip {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+}
+
+.deadline-hoy {
+  background: var(--red-dim);
+  color: var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.deadline-manana,
+.deadline-proximo {
+  background: var(--amber-dim);
+  color: var(--amber);
+}
+
+.deadline-normal {
+  background: var(--mint-dim);
+  color: var(--mint);
+}
+
+.deadline-vencida {
+  background: var(--red-dim);
+  color: var(--red);
+  text-decoration: line-through;
+  opacity: 0.9;
+}
+
+/* === Adjuntos === */
+
+.tarea-adjuntos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tarea-adjunto-thumb {
+  width: 80px;
+  height: 80px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface2);
+  transition: all var(--anim-fast) ease;
+}
+
+.tarea-adjunto-thumb:hover {
+  transform: scale(1.05);
+  border-color: var(--pink-soft);
+}
+
+.tarea-adjunto-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: pointer;
+  animation: fadeIn var(--anim-fast) ease;
+}
+
+.lightbox-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  cursor: default;
+  animation: scaleIn var(--anim-mid) var(--ease-spring);
+}
+
+/* === Checklists === */
+
+.tarea-checklist {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.checklist-header span:first-child {
+  flex: 1;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.checklist-header input {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.checklist-pct {
+  font-size: 11px;
+  color: var(--lila);
+}
+
+.checklist-delete {
+  background: none;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 12px;
+  transition: all var(--anim-fast) ease;
+}
+
+.checklist-delete:hover {
+  color: var(--red);
+  transform: scale(1.15);
+}
+
+.checklist-progress {
+  height: 4px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.checklist-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--lila));
+  border-radius: var(--radius-pill);
+  transition: width var(--anim-mid) var(--ease-out);
+}
+
+.checklist-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.checklist-item.done span {
+  text-decoration: line-through;
+  color: var(--text3);
+}
+
+.checklist-item-cb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border2);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #0d0b14;
+  transition: all var(--anim-fast) var(--ease-spring);
+}
+
+.checklist-item-cb:hover {
+  border-color: var(--pink-soft);
+  transform: scale(1.1);
+}
+
+.checklist-item.done .checklist-item-cb {
+  background: var(--pink);
+  border-color: var(--pink);
+}
+
+.checklist-item:hover .checklist-item-actions {
+  opacity: 1;
+}
+
+.checklist-item-actions {
+  opacity: 0;
+  transition: opacity var(--anim-fast) ease;
+  display: flex;
+  gap: 4px;
+}
+
+.checklist-item-actions button {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--surface3);
+  border: none;
+  border-radius: 4px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all var(--anim-fast) ease;
+}
+
+.checklist-item-actions button:hover {
+  color: var(--pink);
+  background: var(--surface2);
+}
+
+.checklist-add-input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+}
+
+.checklist-add-input::placeholder {
+  color: var(--text3);
+}
+
+.checklist-add-inline {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  animation: fadeInUp var(--anim-fast) var(--ease-out);
+}
+
+.checklist-add-inline input {
+  flex: 1;
+  padding: 6px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.btn-add-checklist {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  color: var(--pink);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: all var(--anim-fast) ease;
+}
+
+.btn-add-checklist:hover {
+  text-decoration: underline;
+  transform: translateX(2px);
+}
+
+/* Campos personalizados en panel */
+.tarea-campos-panel {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+.tarea-campo-line {
+  padding: 2px 0;
+}
+
+/* Actividad */
+.tarea-actividad {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.actividad-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin: 0 0 8px 0;
+}
+
+.actividad-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actividad-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.actividad-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lila);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.actividad-desc {
+  color: var(--text2);
+  flex: 1;
+}
+
+.actividad-fecha {
+  font-size: 11px;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.btn-ver-todo {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: var(--pink);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.btn-ver-todo:hover {
+  text-decoration: underline;
+}
+
+/* Tiempo real prompt */
+.tiempo-real-prompt {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  animation: fadeInUp var(--anim-mid) var(--ease-spring);
+}
+
+.tiempo-real-prompt p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.tiempo-real-prompt input {
+  width: 80px;
+  padding: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Modal: campos personalizados */
+.campo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.campo-nombre {
+  min-width: 100px;
+  font-size: 12px;
+}
+
+.campo-tipo-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--surface3);
+  border-radius: 4px;
+  color: var(--text3);
+}
+
+.campo-row input,
+.campo-row select {
+  flex: 1;
+  margin: 0;
+}
+
+.campo-delete {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.campo-checkbox-switch {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.campo-checkbox-switch input {
+  display: none;
+}
+
+.campo-checkbox-switch span {
+  width: 36px;
+  height: 20px;
+  background: var(--surface3);
+  border-radius: 10px;
+  position: relative;
+  transition: background var(--anim-fast) ease;
+}
+
+.campo-checkbox-switch span::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--text3);
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--anim-fast) var(--ease-spring);
+}
+
+.campo-checkbox-switch input:checked + span {
+  background: var(--pink);
+}
+
+.campo-checkbox-switch input:checked + span::after {
+  transform: translateX(16px);
+  background: #0d0b14;
+}
+
+.new-campo-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  animation: fadeInUp var(--anim-fast) var(--ease-out);
+}
+
+.new-campo-form input,
+.new-campo-form select {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* Etiquetas en modal */
+.etiquetas-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.etiqueta-pill {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface3);
+  color: var(--text3);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--anim-fast) var(--ease-spring);
+}
+
+.etiqueta-pill:hover {
+  transform: scale(1.05);
+}
+
+.etiqueta-pill.active {
+  border-width: 2px;
+}
+
+/* Adjuntos en modal */
+.adjuntos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.adjunto-thumb-wrap {
+  position: relative;
+}
+
+.adjunto-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.adjunto-remove {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform var(--anim-fast) var(--ease-spring);
+}
+
+.adjunto-remove:hover {
+  transform: scale(1.15);
+}
+
+.adjuntos-limit {
+  font-size: 12px;
+  color: var(--text3);
+  margin: 0;
+}
+
+.deadline-ayuda {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* === Responsive Tareas === */
+
+@media (max-width: 768px) {
+  .tareas-content {
+    padding: 16px;
+  }
+
+  .tareas-filtro {
+    padding: 0 16px 12px;
+    gap: 6px;
+  }
+
+  .filtro-pill {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .tareas-kanban {
+    flex-direction: column;
+    gap: 16px;
+    overflow-x: visible;
+    min-height: auto;
+  }
+
+  .tareas-block {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .tareas-columna-add {
+    padding-top: 0;
+  }
+
+  .tarea-edit-btn {
+    opacity: 1;
+  }
+
+  .checklist-item-actions {
+    opacity: 1;
+  }
+
+  .tiempo-real-prompt {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .campo-row {
+    flex-wrap: wrap;
+  }
+
+  .campo-nombre {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .tarea-item {
+    gap: 8px;
+  }
+
+  .tarea-drag-handle {
+    display: none;
   }
 }

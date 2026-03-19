@@ -5,8 +5,15 @@
 
 .main-content {
   flex: 1;
-  margin-left: 200px;
+  margin-left: var(--sidebar-w);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: margin-left var(--anim-mid) var(--ease-out);
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
 }

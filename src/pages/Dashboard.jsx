@@ -42,7 +42,7 @@ function EyeIcon() {
   );
 }
 
-export default function Dashboard() {
+export default function Dashboard({ onMenuClick }) {
   const { clientes, proyectos, tareas, mood } = useStudio();
   const { showToast } = useToast();
   const [cobradoRevealed, setCobradoRevealed] = useState(false);
@@ -87,7 +87,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-page">
-      <Topbar title="Dashboard" />
+      <Topbar title="Dashboard" onMenuClick={onMenuClick} />
 
       <div className="dashboard-content">
         <p className="dashboard-mood">{mensajeMotivacional}</p>

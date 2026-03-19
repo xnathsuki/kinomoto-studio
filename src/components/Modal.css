@@ -2,12 +2,13 @@
   position: fixed;
   inset: 0;
   background: rgba(13, 11, 20, 0.8);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 16px;
+  animation: fadeIn var(--anim-fast) ease;
 }
 
 .modal-content {
@@ -17,6 +18,20 @@
   padding: 24px;
   max-width: 440px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalEnter var(--anim-mid) var(--ease-spring);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .modal-title {
@@ -62,12 +77,14 @@
   font-size: 13px;
   font-family: 'Nunito', sans-serif;
   color: var(--text);
+  transition: border-color var(--anim-fast) ease, box-shadow var(--anim-fast) ease;
 }
 
 .modal-body input:focus,
 .modal-body select:focus,
 .modal-body textarea:focus {
   border-color: var(--pink-soft);
+  box-shadow: 0 0 0 3px var(--pink-glow);
 }
 
 .modal-body select option {
@@ -100,6 +117,7 @@
 
 .modal-actions .btn-primary:hover {
   filter: brightness(1.1);
+  box-shadow: 0 0 20px var(--pink-glow);
 }
 
 .modal-actions .btn-ghost {
@@ -129,4 +147,29 @@
 
 .modal-actions .btn-delete:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .modal-content {
+    max-width: 100%;
+    border-radius: 16px 16px 8px 8px;
+    max-height: 85vh;
+    animation: modalSlideUp var(--anim-mid) var(--ease-out);
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

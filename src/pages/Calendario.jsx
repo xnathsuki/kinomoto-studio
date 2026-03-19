@@ -20,7 +20,7 @@ function getDeadlineDotClass(deadline, today) {
   return 'dot-pink';
 }
 
-export default function Calendario() {
+export default function Calendario({ onMenuClick }) {
   const { proyectos } = useStudio();
 
   const { year, month, days, firstDay } = useMemo(() => {
@@ -76,7 +76,7 @@ export default function Calendario() {
 
   return (
     <div className="calendario-page">
-      <Topbar title="Calendario" />
+      <Topbar title="Calendario" onMenuClick={onMenuClick} />
 
       <div className="calendario-content">
         <h2 className="calendario-mes" style={{ color: 'var(--pink)' }}>
